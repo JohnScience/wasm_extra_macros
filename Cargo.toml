@@ -1,5 +1,5 @@
 [package]
-name = "wasm_extra"
+name = "wasm_extra_macros"
 version = "0.1.0"
 edition = "2021"
 
