@@ -125,7 +125,7 @@ impl FnOnceArgs {
             {
                 #preprologue
                 #closure_prologue
-                let __handler = ::wasm_bindgen::closure::Closure::once_into_js(
+                let __handler = ::wasm_bindgen::closure::Closure::once(
                     #closure
                 );
                 #target_obj_ident.add_event_listener_with_callback(
