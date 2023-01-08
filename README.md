@@ -2,8 +2,15 @@
 
 > Extra utilities for WASM.
 
-So far, the only thing that this crate offers is the `add_event_listener_with_callback!`
-macro named after the `::web_sys::EventTarget::add_event_listener_with_callback()` function.
+So far, crate offers two things:
+
+* the `add_event_listener_with_callback!` macro named after the `::web_sys::EventTarget::add_event_listener_with_callback()` function
+and which internally uses `::wasm_bindgen::closure::Closure::new()`
+to obtain JavaScript closure from Rust closure.
+
+* the `add_event_listener_with_fn_once_callback!` macro,
+which internally uses `::wasm_bindgen::closure::Closure::once_into_js()`
+for handling `FnOnce` closures.
 
 The macro is a bit more ergonomic to use and code with it is easier to mentally parse than
 the corresponding code without it.

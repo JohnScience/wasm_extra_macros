@@ -57,6 +57,12 @@ pub(crate) struct Args {
     pub(crate) closure: ExprClosure,
 }
 
+#[derive(derive_syn_parse::Parse)]
+pub(crate) struct FnMutArgs(pub(crate) Args);
+
+#[derive(derive_syn_parse::Parse)]
+pub(crate) struct FnOnceArgs(pub(crate) Args);
+
 impl Parse for EventTarget {
     fn parse(input: ParseStream) -> syn::Result<Self> {
         if input.peek(And) {
@@ -88,9 +94,9 @@ impl Parse for Args {
     }
 }
 
-impl Args {
+impl FnMutArgs {
     pub(crate) fn handle(self) -> TokenStream {
-        let Self { target, event, closure_prologue, closure } = self;
+        let Args { target, event, closure_prologue, closure } = self.0;
         let target_obj_ident = target.target_obj_ident();
         let preprologue: Option<ClosurePreprologue> = target.preprologue();
         quote! {
@@ -98,6 +104,28 @@ impl Args {
                 #preprologue
                 #closure_prologue
                 let __handler = ::wasm_bindgen::closure::Closure::<dyn ::core::ops::FnMut(_)>::new::<_>(
+                    #closure
+                );
+                #target_obj_ident.add_event_listener_with_callback(
+                    #event,
+                    __handler.as_ref().unchecked_ref()
+                ).unwrap();
+                ::wasm_bindgen::closure::Closure::forget(__handler);
+            }
+        }
+    }
+}
+
+impl FnOnceArgs {
+    pub(crate) fn handle(self) -> TokenStream {
+        let Args { target, event, closure_prologue, closure } = self.0;
+        let target_obj_ident = target.target_obj_ident();
+        let preprologue: Option<ClosurePreprologue> = target.preprologue();
+        quote! {
+            {
+                #preprologue
+                #closure_prologue
+                let __handler = ::wasm_bindgen::closure::Closure::once_into_js(
                     #closure
                 );
                 #target_obj_ident.add_event_listener_with_callback(

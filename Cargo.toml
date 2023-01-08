@@ -9,6 +9,7 @@ edition = "2021"
 syn = { version = "1.0.107", features = ["parsing", "full"] }
 proc-macro2 = "1.0.49"
 quote = "1.0.23"
+derive-syn-parse = "0.1.5"
 
 [lib]
 proc-macro = true
