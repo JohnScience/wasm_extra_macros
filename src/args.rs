@@ -108,7 +108,7 @@ impl FnMutArgs {
                 );
                 #target_obj_ident.add_event_listener_with_callback(
                     #event,
-                    __handler.as_ref().unchecked_ref()
+                    ::wasm_bindgen::JsCast::unchecked_ref(__handler.as_ref())
                 ).unwrap();
                 ::wasm_bindgen::closure::Closure::forget(__handler);
             }
@@ -130,7 +130,7 @@ impl FnOnceArgs {
                 );
                 #target_obj_ident.add_event_listener_with_callback(
                     #event,
-                    __handler.as_ref().unchecked_ref()
+                    ::wasm_bindgen::JsCast::unchecked_ref(__handler.as_ref())
                 ).unwrap();
                 ::wasm_bindgen::closure::Closure::forget(__handler);
             }
