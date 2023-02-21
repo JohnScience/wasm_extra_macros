@@ -1,6 +1,6 @@
 [package]
 name = "wasm_extra_macros"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Dmitrii Demenev <demenev.dmitriy1@gmail.com>"]
 edition = "2021"
 rust-version = "1.56.1" # https://github.com/foresterre/cargo-msrv
@@ -24,10 +24,13 @@ autobenches = false
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-syn = { version = "1.0.107", features = ["parsing", "full"] }
-proc-macro2 = "1.0.51"
-quote = "1.0.23"
-derive-syn-parse = "0.1.5"
+syn = { version = "1", features = ["parsing", "full"] }
+# latest known proc-macro2 version is 1.0.51
+proc-macro2 = "1"
+# latest known quote version is 1.0.23
+quote = "1"
+# latest known derive-syn-parse version is 0.1.0
+derive-syn-parse = "0.1"
 
 [lib]
 proc-macro = true
